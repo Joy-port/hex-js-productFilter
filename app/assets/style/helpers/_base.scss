@@ -1,0 +1,27 @@
+body{
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+ul, ol{
+    list-style: none;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+img{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+input:focus, input:active, textarea:focus, textarea:active{
+    outline: none;
+}
+
+a, p, span{
+    margin-bottom: 0;
+}

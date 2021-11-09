@@ -1,58 +1,99 @@
 ---
-title: Boostrap Index
+title: product page
 layout: ./app/layout.ejs
 engine: ejs
 current: index
 ---
-
-<div class="container">
-  <h1 class="index__h1">這是一段話</h1>
-  <div class="alert alert-primary" role="alert">
-    A simple primary alert—check it out!
-  </div>
-  <div class="alert alert-secondary" role="alert">
-    A simple secondary alert—check it out!
-  </div>
-  <div class="alert alert-success" role="alert">
-    A simple success alert—check it out!
-  </div>
-  <div class="alert alert-danger" role="alert">
-    A simple danger alert—check it out!
-  </div>
-  <div class="alert alert-warning" role="alert">
-    A simple warning alert—check it out!
-  </div>
-  <div class="alert alert-info" role="alert">
-    A simple info alert—check it out!
-  </div>
-  <div class="alert alert-light" role="alert">
-    A simple light alert—check it out!
-  </div>
-  <div class="alert alert-dark" role="alert">
-    A simple dark alert—check it out!
-  </div>
+<!-- filter -->
+<div class="row justify-content-center py-10">
+    <div class="col-10">
+        <div class="card card-shadow px-6 py-6">
+        <div class="row align-items-center">
+            <div class="col-5 offset-1">
+                <img class="mb-3" src="./assets/images/undraw_Traveling_re_weve (1).png" alt="cute img">
+                <img src="./assets/images/Let’s Travel !.png" alt="lets travel img">
+            </div>
+            <div class="col-5">
+                    <h2  class="h4 border-0 border-bottom border-3 border-primary text-primary w-100 ps-4 pb-1 | position-relative mb-4" >
+                        <span class="material-icons-outlined position-absolute top-50 start-0 translate-middle-y text-primary">
+                            add_circle_outline
+                        </span>
+                        新增旅遊套票</h2>
+                <ul class="search-lists mb-4">
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">套票名稱</p>
+                        <input class="input-primary" type="text" placeholder="請填寫套票名稱">
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">圖片網址</p>
+                        <input class="input-primary" type="url" placeholder="請填寫圖片網址">
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">景點地區</p>
+                        <select class="input-primary" name="" id="">
+                            <option selected disabled>請選擇景點地區</option>
+                            <option value=""></option>
+                        </select>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">套票金額</p>
+                        <input class="input-primary" type="number" placeholder="請填寫套票金額">
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">套票組數</p>
+                        <input class="input-primary" type="number" placeholder="請填寫套票組數">
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">套票星級</p>
+                        <input class="input-primary" type="number" placeholder="請填寫套票星級">
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                        <p class="text-primary text-nowarp">套票描述</p>
+                        <textarea class="input-primary" name="" cols="19" rows="10" placeholder="請填寫套票描述（限 100 字）"></textarea>
+                    </li>
+                </ul>
+                <div class="text-end">
+                <input type="button" value="新增套票" class="btn btn-primary rounded-3 px-4 py-2">
+            </div>
+            </div>
+        </div>
+        </div> 
+    </div>
 </div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
+<div class="bg-light pt-6 pb-10">
+    <div class="container">
+        <div class="row offset-1 d-flex gap-6 align-items-center | mb-7">
+            <select class="col-3 catagory-group" name="" id="">
+                <option selected disabled>地區搜尋</option>
+            </select>
+            <p class="col-4">本次搜尋共 <span> 6 </span> 筆資料</p>
+        </div>
+        <ul class="row">
+            <li class="col-4">
+                <div class="card d-flex flex-column">
+                    <div class="card-tag-top">台北</div>
+                    <img src="./assets/images/1.png" alt="product img" class="card-img-top">
+                    <div class="card-body position-relative">
+                        <div class="card-tag-middle">8.6</div>
+                        <h3 class="text-primary h4 border-0 border-bottom border-primary lh-base | mb-6">綠島自由行套裝行程</h3>
+                        <p class="mb-4">嚴選超高CP值綠島自由行套裝行程，多種綠島套裝組合，提供台東綠島來回船票、綠島環島機車、綠島民宿住宿，行程加贈『綠島浮潛體驗』以及『綠島生態導覽』，讓你用輕鬆的綠島套裝自由行，也能深度認識綠島在地文化。</p>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-1">
+                            <p class="text-primary align-middle text-nowarp">
+                                <span class="material-icons-outlined me-1 align-middle card-icon">
+                                error
+                                </span>
+                                剩下最後 <span>8</span> 組</p>
+                            <p class="text-primary align-middle text-nowarp">
+                               TWD <span class="h2 mb-0 ms-1 align-middle">$1280</span>
+                            </p>
+                        </div>
+                    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+                </div>
+            </li>
+        </ul>
+            
+        </div>
     </div>
-  </div>
 </div>

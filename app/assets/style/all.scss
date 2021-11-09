@@ -2,5 +2,7 @@
 @import "./helpers/variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
-
+@import './helpers/base';
+@import './components/card';
+@import './components/input';
 @import './layout/index.scss'
