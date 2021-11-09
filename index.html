@@ -30,41 +30,41 @@
                             add_circle_outline
                         </span>
                         新增旅遊套票</h2>
-                <ul class="search-lists mb-4">
-                    <li class="d-flex align-items-center justify-content-between mb-3">
-                        <p class="text-primary text-nowarp">套票名稱</p>
-                        <input class="input-primary js-title" type="text" placeholder="請填寫套票名稱">
-                    </li>
-                    <li class="d-flex align-items-center justify-content-between mb-3">
-                        <p class="text-primary text-nowarp">圖片網址</p>
-                        <input class="input-primary js-imgUrl" type="url" placeholder="請填寫圖片網址">
-                    </li>
-                    <li class="d-flex align-items-center justify-content-between mb-3">
-                        <p class="text-primary text-nowarp">景點地區</p>
-                        <select class="input-primary js-location">
+                <form class="search-lists mb-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="text-primary text-nowarp" for="title">套票名稱</label>
+                        <input class="input-primary js-title" id="title" type="text" placeholder="請填寫套票名稱">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="text-primary text-nowarp" for="imgUrl">圖片網址</label>
+                        <input class="input-primary js-imgUrl" id="imgUrl" type="url" placeholder="請填寫圖片網址">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="text-primary text-nowarp" for="location">景點地區</label>
+                        <select class="input-primary js-location" id="location">
                             <option selected disabled>請選擇景點地區</option>
                             <option value=""></option>
                         </select>
-                    </li>
-                    <li class="d-flex align-items-center justify-content-between mb-3">
-                        <p class="text-primary text-nowarp">套票金額</p>
-                        <input class="input-primary js-price" type="number" placeholder="請填寫套票金額">
-                    </li>
-                    <li class="d-flex align-items-center justify-content-between mb-3">
-                        <p class="text-primary text-nowarp">套票組數</p>
-                        <input class="input-primary js-number" type="number" placeholder="請填寫套票組數">
-                    </li>
-                    <li class="d-flex align-items-center justify-content-between mb-3">
-                        <p class="text-primary text-nowarp">套票星級</p>
-                        <input class="input-primary js-rating" type="number" placeholder="請填寫套票星級" min="1" max="10">
-                    </li>
-                    <li class="d-flex justify-content-between mb-3">
-                        <p class="text-primary text-nowarp mt-1">套票描述</p>
-                        <textarea class="input-primary js-description" cols="19" rows="10" placeholder="請填寫套票描述（限 100 字）"></textarea>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="text-primary text-nowarp" for="price">套票金額</label>
+                        <input class="input-primary js-price" id="price" type="number" placeholder="請填寫套票金額">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="text-primary text-nowarp" for="number">套票組數</label>
+                        <input class="input-primary js-number" id="number" type="number" placeholder="請填寫套票組數">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="text-primary text-nowarp" id="rating">套票星級</label>
+                        <input class="input-primary js-rating" id="rating" type="number" placeholder="請填寫套票星級" min="1" max="10">
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <label class="text-primary text-nowarp mt-1" for="description">套票描述</label>
+                        <textarea class="input-primary js-description" id="description" cols="19" rows="10" placeholder="請填寫套票描述（限 100 字）"></textarea>
+                    </div>
+                </form>
                 <div class="text-end">
-                <input type="button" value="新增套票" class="btn btn-primary rounded-3 px-4 py-2">
+                <input type="button" value="新增套票" class="btn btn-primary rounded-3 px-4 py-2 js-btn">
             </div>
             </div>
         </div>

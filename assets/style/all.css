@@ -12346,6 +12346,15 @@ a, p, span {
   font-size: 20px;
 }
 
+.card-img-top {
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  width: 100%;
+  max-height: 180px;
+}
+
 .card-tag-top {
   position: absolute;
   background-color: #64C3BF;

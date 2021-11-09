@@ -13,6 +13,9 @@
 var list = document.querySelector('.list');
 var selectLocation = document.querySelector('.category-group');
 var total = document.querySelector('.js-totalNum');
+var form = document.querySelector('.search-lists');
+var submitBtn = document.querySelector('.js-btn');
+var formLocation = document.querySelector('.js-location');
 var data = [{
   location: '台北',
   title: '綠島自由行套裝行程',
@@ -82,9 +85,10 @@ function renderData(inputData) {
   var selectStr = '<option value="全部地區" selected>全部地區</option>';
   newSelectGroup.forEach(function (item) {
     var content = "\n    <option value=\"".concat(item, "\">").concat(item, "</option>\n    ");
-    selectStr += content;
+    str += content;
   });
-  selectLocation.innerHTML = selectStr;
+  selectLocation.innerHTML = selectStr + str;
+  formLocation.innerHTML = "<option selected disabled>\u8ACB\u9078\u64C7\u666F\u9EDE\u5730\u5340</option>" + str;
 }
 
 renderData(data); // 顯示地區資料篩選
@@ -107,6 +111,37 @@ function switchLocation(e) {
   total.textContent = totalNum;
 }
 
-;
+; //新增商品
+
+function addProduct(e) {
+  e.preventDefault();
+
+  if (!e.target.classList.contains('js-btn')) {
+    return;
+  }
+
+  ;
+  var formInput = Array.from(form.querySelectorAll('.input-primary'));
+  var valueAry = formInput.map(function (item) {
+    return item.value;
+  });
+  var product = {
+    location: valueAry[2],
+    title: valueAry[0],
+    description: valueAry[6],
+    rating: valueAry[5],
+    inStock: "".concat(valueAry[4] <= 10 && valueAry[4] > 0 ? 'valueAry[4]' : ' '),
+    price: valueAry[3],
+    imgUrl: valueAry[1]
+  };
+  data.push(product);
+  formInput.forEach(function (item) {
+    return item.value = "";
+  });
+  formLocation.value = "請選擇景點地區";
+  renderData(data);
+}
+
 selectLocation.addEventListener("change", switchLocation);
+submitBtn.addEventListener("click", addProduct);
 //# sourceMappingURL=all.js.map
