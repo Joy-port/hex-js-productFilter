@@ -12,6 +12,10 @@
 const list = document.querySelector('.list');
 const selectLocation = document.querySelector('.category-group');
 const total = document.querySelector('.js-totalNum');
+const form = document.querySelector('.search-lists');
+const submitBtn = document.querySelector('.js-btn');
+const formLocation = document.querySelector('.js-location');
+
 let data =[
   {
     location: '台北',
@@ -113,15 +117,16 @@ function renderData(inputData){
   //渲染地區資料
   let selectGroup = data.map(item => item.location);
   let newSelectGroup = selectGroup.filter((item,index)=> selectGroup.indexOf(item)=== index);
-  let selectStr= '<option value="全部地區" selected>全部地區</option>'
+  let selectStr= '<option value="全部地區" selected>全部地區</option>';
   
   newSelectGroup.forEach(item =>{
     let content =`
     <option value="${item}">${item}</option>
     `;
-    selectStr += content;
+    str += content;
   })
-  selectLocation.innerHTML = selectStr;
+  selectLocation.innerHTML = selectStr + str;
+  formLocation.innerHTML = `<option selected disabled>請選擇景點地區</option>` + str;
 
 }
 
@@ -147,4 +152,31 @@ function switchLocation(e){
   
 };
 
+//新增商品
+function addProduct(e){
+  e.preventDefault();
+  if(!e.target.classList.contains('js-btn')){
+    return ;
+  };
+  let formInput = Array.from(form.querySelectorAll('.input-primary'));
+  let valueAry = formInput.map(item => item.value);
+  let product ={
+    location: valueAry[2],
+    title: valueAry[0],
+    description: valueAry[6],
+    rating: valueAry[5],
+    inStock: `${valueAry[4] <=10 &&  valueAry[4] >0 ? 'valueAry[4]': ' '}`,
+    price: valueAry[3],
+    imgUrl: valueAry[1]
+  };
+
+
+  data.push(product);
+  formInput.forEach(item => item.value ="");
+  formLocation.value="請選擇景點地區";
+
+  renderData(data);
+}
 selectLocation.addEventListener("change", switchLocation);
+
+submitBtn.addEventListener("click", addProduct);
