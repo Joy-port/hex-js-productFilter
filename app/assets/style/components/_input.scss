@@ -1,3 +1,17 @@
+// hide num
+/* Chrome, Safari, Edge, Opera */
+// input[type=number]::-webkit-outer-spin-button,
+// input[type=number]::-webkit-inner-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }
+
+
+// /* Firefox */
+// input[type=number] {
+//   -moz-appearance: textfield;
+// }
+
 .input-primary{
     border: 0px solid #000;
     border-bottom: 1px solid $primary;
@@ -14,7 +28,7 @@
     }
 }
 
-.catagory-group{
+.category-group{
     border: 1px solid #CED4DA;
     background: #fff;
     padding-top: 0.5rem;

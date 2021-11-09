@@ -9,47 +9,47 @@ current: index
     <div class="col-10">
         <div class="card card-shadow px-6 py-6">
         <div class="row align-items-center">
-            <div class="col-5 offset-1">
-                <img class="mb-3" src="./assets/images/undraw_Traveling_re_weve (1).png" alt="cute img">
-                <img src="./assets/images/Let’s Travel !.png" alt="lets travel img">
+            <div class="col-md-5 offset-1">
+                <img class="card-img mb-3" src="./assets/images/undraw_Traveling_re_weve (1).png" alt="cute img">
+                <img class="card-img" src="./assets/images/Let’s Travel !.png" alt="lets travel img">
             </div>
-            <div class="col-5">
+            <div class="col-md-5">
                     <h2  class="h4 border-0 border-bottom border-3 border-primary text-primary w-100 ps-4 pb-1 | position-relative mb-4" >
                         <span class="material-icons-outlined position-absolute top-50 start-0 translate-middle-y text-primary">
                             add_circle_outline
                         </span>
                         新增旅遊套票</h2>
                 <ul class="search-lists mb-4">
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                    <li class="d-flex align-items-center justify-content-between mb-3">
                         <p class="text-primary text-nowarp">套票名稱</p>
-                        <input class="input-primary" type="text" placeholder="請填寫套票名稱">
+                        <input class="input-primary js-title" type="text" placeholder="請填寫套票名稱">
                     </li>
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                    <li class="d-flex align-items-center justify-content-between mb-3">
                         <p class="text-primary text-nowarp">圖片網址</p>
-                        <input class="input-primary" type="url" placeholder="請填寫圖片網址">
+                        <input class="input-primary js-imgUrl" type="url" placeholder="請填寫圖片網址">
                     </li>
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                    <li class="d-flex align-items-center justify-content-between mb-3">
                         <p class="text-primary text-nowarp">景點地區</p>
-                        <select class="input-primary" name="" id="">
+                        <select class="input-primary js-location">
                             <option selected disabled>請選擇景點地區</option>
                             <option value=""></option>
                         </select>
                     </li>
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                    <li class="d-flex align-items-center justify-content-between mb-3">
                         <p class="text-primary text-nowarp">套票金額</p>
-                        <input class="input-primary" type="number" placeholder="請填寫套票金額">
+                        <input class="input-primary js-price" type="number" placeholder="請填寫套票金額">
                     </li>
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                    <li class="d-flex align-items-center justify-content-between mb-3">
                         <p class="text-primary text-nowarp">套票組數</p>
-                        <input class="input-primary" type="number" placeholder="請填寫套票組數">
+                        <input class="input-primary js-number" type="number" placeholder="請填寫套票組數">
                     </li>
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
+                    <li class="d-flex align-items-center justify-content-between mb-3">
                         <p class="text-primary text-nowarp">套票星級</p>
-                        <input class="input-primary" type="number" placeholder="請填寫套票星級">
+                        <input class="input-primary js-rating" type="number" placeholder="請填寫套票星級" min="1" max="10">
                     </li>
-                    <li class="d-flex align-items-center justify-content-between gap-6 mb-3">
-                        <p class="text-primary text-nowarp">套票描述</p>
-                        <textarea class="input-primary" name="" cols="19" rows="10" placeholder="請填寫套票描述（限 100 字）"></textarea>
+                    <li class="d-flex justify-content-between mb-3">
+                        <p class="text-primary text-nowarp mt-1">套票描述</p>
+                        <textarea class="input-primary js-description" cols="19" rows="10" placeholder="請填寫套票描述（限 100 字）"></textarea>
                     </li>
                 </ul>
                 <div class="text-end">
@@ -63,13 +63,15 @@ current: index
 
 <div class="bg-light pt-6 pb-10">
     <div class="container">
-        <div class="row offset-1 d-flex gap-6 align-items-center | mb-7">
-            <select class="col-3 catagory-group" name="" id="">
+        <div class="row align-items-center | mb-7">
+            <div class="col-6 offset-md-1 col-md-3">
+            <select class="category-group w-100">
                 <option selected disabled>地區搜尋</option>
             </select>
-            <p class="col-4">本次搜尋共 <span> 6 </span> 筆資料</p>
+            </div>
+            <p class="col-6 col-md-8">本次搜尋共 <span class="js-totalNum"> 6 </span> 筆資料</p>
         </div>
-        <ul class="row">
+        <ul class="row list">
             <li class="col-4">
                 <div class="card d-flex flex-column">
                     <div class="card-tag-top">台北</div>
