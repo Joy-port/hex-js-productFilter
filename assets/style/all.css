@@ -12324,6 +12324,10 @@ a, p, span {
   gap: 30px;
 }
 
+.w-70 {
+  width: 70%;
+}
+
 .card {
   border-radius: 4px;
   border: 0px solid #000;

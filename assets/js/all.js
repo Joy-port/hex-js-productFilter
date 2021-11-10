@@ -16,6 +16,7 @@ var total = document.querySelector('.js-totalNum');
 var form = document.querySelector('.search-lists');
 var submitBtn = document.querySelector('.js-btn');
 var formLocation = document.querySelector('.js-location');
+var formInput = Array.from(form.querySelectorAll('.input-primary'));
 var data = [{
   location: '台北',
   title: '綠島自由行套裝行程',
@@ -65,7 +66,37 @@ var data = [{
   inStock: 3,
   price: 2480,
   imgUrl: './assets/images/6.png'
-}]; //資料渲染
+} // {
+//   "id": 0,
+//   "name": "肥宅心碎賞櫻3日",
+//   "imgUrl": "https://images.unsplash.com/photo-1522383225653-ed111181a951?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1655&q=80",
+//   "area": "高雄",
+//   "description": "賞櫻花最佳去處。肥宅不得不去的超讚景點！",
+//   "group": 87,
+//   "price": 1400,
+//   "rate": 10
+// },
+// {
+//   "id": 1,
+//   "name": "貓空纜車雙程票",
+//   "imgUrl": "https://images.unsplash.com/photo-1501393152198-34b240415948?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+//   "area": "台北",
+//   "description": "乘坐以透明強化玻璃為地板的「貓纜之眼」水晶車廂，享受騰雲駕霧遨遊天際之感",
+//   "group": 99,
+//   "price": 240,
+//   "rate": 2
+// },
+// {
+//   "id": 2,
+//   "name": "台中谷關溫泉會1日",
+//   "imgUrl": "https://images.unsplash.com/photo-1535530992830-e25d07cfa780?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+//   "area": "台中",
+//   "description": "全館客房均提供谷關無色無味之優質碳酸原湯，並取用八仙山之山冷泉供蒞臨貴賓沐浴及飲水使用。",
+//   "group": 20,
+//   "price": 1765,
+//   "rate": 7
+// }
+]; //資料渲染
 
 function renderData(inputData) {
   //渲染當前票券資訊
@@ -74,9 +105,13 @@ function renderData(inputData) {
     var content = "<li class=\"col-md-6 col-lg-4 mb-4\">\n        <div class=\"card d-flex flex-column h-100\">\n            <div class=\"card-tag-top\">".concat(item.location, "</div>\n            <img src=\"").concat(item.imgUrl, "\" alt=\"product img\" class=\"card-img-top\">\n            <div class=\"card-body d-flex flex-column justify-content-between position-relative h-100\">\n              <div className=\"h-100\">\n                <div class=\"card-tag-middle\">").concat(item.rating, "</div>\n                <h3 class=\"text-primary h4 border-0 border-bottom border-primary lh-base | mb-6\">").concat(item.title, "</h3>\n                <p class=\"mb-4\">").concat(item.description, "</p>\n              </div>\n              <div class=\"d-flex justify-content-between align-items-center flex-wrap gap-1\">\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.inStock !== 0 ? 'd-block' : 'd-none', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      \u5269\u4E0B\u6700\u5F8C <span>").concat(item.inStock, "</span> \u7D44\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.inStock !== 0 ? 'd-none' : 'd-block', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      ").concat(item.limit, "\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp\">\n                      TWD <span class=\"h2 mb-0 ms-1 align-middle\">$").concat(item.price, "</span>\n                  </p>\n              </div>\n          </div>\n          </div>\n      </li>\n    ");
     str += content;
   });
-  list.innerHTML = str; //渲染地區資料
+  list.innerHTML = str;
+}
 
-  var selectGroup = data.map(function (item) {
+function renderSelect(inputData) {
+  //渲染地區資料
+  var str = '';
+  var selectGroup = inputData.map(function (item) {
     return item.location;
   });
   var newSelectGroup = selectGroup.filter(function (item, index) {
@@ -89,9 +124,8 @@ function renderData(inputData) {
   });
   selectLocation.innerHTML = selectStr + str;
   formLocation.innerHTML = "<option selected disabled>\u8ACB\u9078\u64C7\u666F\u9EDE\u5730\u5340</option>" + str;
-}
+} // 顯示地區資料篩選
 
-renderData(data); // 顯示地區資料篩選
 
 function switchLocation(e) {
   //console.log(e.target.value);
@@ -105,10 +139,10 @@ function switchLocation(e) {
 
     ;
   });
-  var totalNum = filterData.length;
-  renderData(filterData);
   selectLocation.value = e.target.value;
+  var totalNum = filterData.length;
   total.textContent = totalNum;
+  renderData(filterData);
 }
 
 ; //新增商品
@@ -121,27 +155,77 @@ function addProduct(e) {
   }
 
   ;
-  var formInput = Array.from(form.querySelectorAll('.input-primary'));
   var valueAry = formInput.map(function (item) {
     return item.value;
   });
   var product = {
-    location: valueAry[2],
     title: valueAry[0],
-    description: valueAry[6],
+    imgUrl: valueAry[1],
+    location: valueAry[2],
+    price: format(valueAry[3]),
+    inStock: valueAry[4],
     rating: valueAry[5],
-    inStock: "".concat(valueAry[4] <= 10 && valueAry[4] > 0 ? 'valueAry[4]' : ' '),
-    price: valueAry[3],
-    imgUrl: valueAry[1]
+    description: valueAry[6],
+    id: new Date().getTime()
   };
   data.push(product);
-  formInput.forEach(function (item) {
-    return item.value = "";
+  formInput.forEach(function (item, index) {
+    item.value = "";
+    formInput[index].classList.remove('is-valid');
   });
   formLocation.value = "請選擇景點地區";
   renderData(data);
+} //加入千分位符號
+
+
+function format(value) {
+  var reg = /\d{1,3}(?=(\d{3})+$)/g;
+  return (value + '').replace(reg, '$&,');
 }
 
-selectLocation.addEventListener("change", switchLocation);
-submitBtn.addEventListener("click", addProduct);
+; //表單驗證
+
+function checkValidation() {
+  formInput.forEach(function (item, index) {
+    if (item.value.trim() === '') {
+      formInput[index].classList.add('is-invalid');
+    } else {
+      formInput[index].classList.remove('is-invalid');
+      formInput[index].classList.add('is-valid');
+    }
+
+    ;
+
+    if (item.classList.contains('is-invalid')) {
+      submitBtn.classList.add('disabled');
+    } else {
+      submitBtn.classList.remove('disabled');
+    }
+
+    ;
+  });
+  var input = formInput[5].value; //判斷票數數量
+
+  if (parseInt(input) > 0 && parseInt(input) <= 10) {
+    formInput[index].classList.remove('is-invalid');
+    formInput[5].classList.add('is-valid');
+  } else {
+    formInput[5].classList.add('is-invalid');
+  }
+
+  ;
+} //預設渲染
+
+
+function init() {
+  selectLocation.addEventListener("change", switchLocation);
+  formInput.forEach(function (item) {
+    return item.addEventListener('keyup', checkValidation);
+  });
+  submitBtn.addEventListener("click", addProduct);
+  renderSelect(data);
+  renderData(data);
+}
+
+init();
 //# sourceMappingURL=all.js.map
