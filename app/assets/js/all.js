@@ -15,6 +15,7 @@ const total = document.querySelector('.js-totalNum');
 const form = document.querySelector('.search-lists');
 const submitBtn = document.querySelector('.js-btn');
 const formLocation = document.querySelector('.js-location');
+const  formInput = Array.from(form.querySelectorAll('.input-primary'));
 
 let data =[
   {
@@ -71,8 +72,39 @@ let data =[
     inStock: 3,
     price: 2480,
     imgUrl: './assets/images/6.png'
-  }
+},
+  // {
+  //   "id": 0,
+  //   "name": "肥宅心碎賞櫻3日",
+  //   "imgUrl": "https://images.unsplash.com/photo-1522383225653-ed111181a951?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1655&q=80",
+  //   "area": "高雄",
+  //   "description": "賞櫻花最佳去處。肥宅不得不去的超讚景點！",
+  //   "group": 87,
+  //   "price": 1400,
+  //   "rate": 10
+  // },
+  // {
+  //   "id": 1,
+  //   "name": "貓空纜車雙程票",
+  //   "imgUrl": "https://images.unsplash.com/photo-1501393152198-34b240415948?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+  //   "area": "台北",
+  //   "description": "乘坐以透明強化玻璃為地板的「貓纜之眼」水晶車廂，享受騰雲駕霧遨遊天際之感",
+  //   "group": 99,
+  //   "price": 240,
+  //   "rate": 2
+  // },
+  // {
+  //   "id": 2,
+  //   "name": "台中谷關溫泉會1日",
+  //   "imgUrl": "https://images.unsplash.com/photo-1535530992830-e25d07cfa780?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+  //   "area": "台中",
+  //   "description": "全館客房均提供谷關無色無味之優質碳酸原湯，並取用八仙山之山冷泉供蒞臨貴賓沐浴及飲水使用。",
+  //   "group": 20,
+  //   "price": 1765,
+  //   "rate": 7
+  // }
 ];
+
 
 //資料渲染
 function renderData(inputData){
@@ -113,12 +145,15 @@ function renderData(inputData){
     str += content ;
   });
   list.innerHTML = str;
+}
 
+function renderSelect(inputData){
   //渲染地區資料
-  let selectGroup = data.map(item => item.location);
+  let str = '';
+  let selectGroup = inputData.map(item => item.location);
   let newSelectGroup = selectGroup.filter((item,index)=> selectGroup.indexOf(item)=== index);
   let selectStr= '<option value="全部地區" selected>全部地區</option>';
-  
+
   newSelectGroup.forEach(item =>{
     let content =`
     <option value="${item}">${item}</option>
@@ -127,14 +162,13 @@ function renderData(inputData){
   })
   selectLocation.innerHTML = selectStr + str;
   formLocation.innerHTML = `<option selected disabled>請選擇景點地區</option>` + str;
-
 }
 
-renderData(data);
 
 // 顯示地區資料篩選
 function switchLocation(e){
   //console.log(e.target.value);
+
   let filterData = [];
   data.filter(item =>{
     if(e.target.value === '全部區域'){
@@ -143,13 +177,11 @@ function switchLocation(e){
       filterData.push(item);
     };
   });
+  selectLocation.value=e.target.value;
+  
   let totalNum = filterData.length;
-
-  
-  renderData(filterData);
-  selectLocation.value = e.target.value;
   total.textContent = totalNum;
-  
+  renderData(filterData);
 };
 
 //新增商品
@@ -158,25 +190,72 @@ function addProduct(e){
   if(!e.target.classList.contains('js-btn')){
     return ;
   };
-  let formInput = Array.from(form.querySelectorAll('.input-primary'));
+
   let valueAry = formInput.map(item => item.value);
+
   let product ={
-    location: valueAry[2],
     title: valueAry[0],
-    description: valueAry[6],
+    imgUrl: valueAry[1],
+    location: valueAry[2],
+    price: format(valueAry[3]),
+    inStock: valueAry[4],
     rating: valueAry[5],
-    inStock: `${valueAry[4] <=10 &&  valueAry[4] >0 ? 'valueAry[4]': ' '}`,
-    price: valueAry[3],
-    imgUrl: valueAry[1]
+    description: valueAry[6],
+    id: new Date().getTime()
   };
 
 
   data.push(product);
-  formInput.forEach(item => item.value ="");
+  formInput.forEach(function(item,index){
+    item.value ="" ; 
+    formInput[index].classList.remove('is-valid');
+  });
   formLocation.value="請選擇景點地區";
 
   renderData(data);
 }
-selectLocation.addEventListener("change", switchLocation);
+//加入千分位符號
+function format(value){
+  const reg = /\d{1,3}(?=(\d{3})+$)/g;   
+  return (value + '').replace(reg, '$&,');
+};
 
-submitBtn.addEventListener("click", addProduct);
+//表單驗證
+function checkValidation(){
+  formInput.forEach(function(item,index){
+    if(item.value.trim()===''){
+      formInput[index].classList.add('is-invalid');
+    }else{
+      formInput[index].classList.remove('is-invalid');
+      formInput[index].classList.add('is-valid');
+    };
+    if(item.classList.contains('is-invalid')){
+      submitBtn.classList.add('disabled');
+    }else{
+      submitBtn.classList.remove('disabled');
+    };
+  });
+  let input = formInput[5].value;
+
+   //判斷票數數量
+   if(parseInt(input)>0 && parseInt(input)<= 10){
+    formInput[index].classList.remove('is-invalid');
+    formInput[5].classList.add('is-valid');
+  }else{
+    formInput[5].classList.add('is-invalid');
+  };
+
+
+}
+//預設渲染
+function init(){
+  selectLocation.addEventListener("change", switchLocation);
+  formInput.forEach(item => item.addEventListener('keyup', checkValidation));
+  submitBtn.addEventListener("click", addProduct);
+  
+  renderSelect(data);
+  renderData(data);
+
+}
+
+init();
