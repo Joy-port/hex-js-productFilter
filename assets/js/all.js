@@ -16,7 +16,8 @@ var total = document.querySelector('.js-totalNum');
 var form = document.querySelector('.search-lists');
 var submitBtn = document.querySelector('.js-btn');
 var formLocation = document.querySelector('.js-location');
-var formInput = Array.from(form.querySelectorAll('.input-primary'));
+var formInput = Array.from(form.querySelectorAll('.input-primary')); //week 5 data
+
 var data = [{
   location: '台北',
   title: '綠島自由行套裝行程',
@@ -96,13 +97,29 @@ var data = [{
 //   "price": 1765,
 //   "rate": 7
 // }
-]; //資料渲染
+]; //week 6 data
+
+var url = 'https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json'; // Make a request for a user with a given ID
+
+function getApi() {
+  axios.get(url).then(function (res) {
+    // handle success
+    data = res.data.data;
+    console.log(data);
+    renderData(data);
+    renderSelect(data);
+  })["catch"](function (error) {
+    // handle error
+    console.log(error);
+  });
+} //資料渲染
+
 
 function renderData(inputData) {
   //渲染當前票券資訊
   var str = '';
   inputData.forEach(function (item) {
-    var content = "<li class=\"col-md-6 col-lg-4 mb-4\">\n        <div class=\"card d-flex flex-column h-100\">\n            <div class=\"card-tag-top\">".concat(item.location, "</div>\n            <img src=\"").concat(item.imgUrl, "\" alt=\"product img\" class=\"card-img-top\">\n            <div class=\"card-body d-flex flex-column justify-content-between position-relative h-100\">\n              <div className=\"h-100\">\n                <div class=\"card-tag-middle\">").concat(item.rating, "</div>\n                <h3 class=\"text-primary h4 border-0 border-bottom border-primary lh-base | mb-6\">").concat(item.title, "</h3>\n                <p class=\"mb-4\">").concat(item.description, "</p>\n              </div>\n              <div class=\"d-flex justify-content-between align-items-center flex-wrap gap-1\">\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.inStock !== 0 ? 'd-block' : 'd-none', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      \u5269\u4E0B\u6700\u5F8C <span>").concat(item.inStock, "</span> \u7D44\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.inStock !== 0 ? 'd-none' : 'd-block', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      ").concat(item.limit, "\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp\">\n                      TWD <span class=\"h2 mb-0 ms-1 align-middle\">$").concat(item.price, "</span>\n                  </p>\n              </div>\n          </div>\n          </div>\n      </li>\n    ");
+    var content = "<li class=\"col-md-6 col-lg-4 mb-4\">\n        <div class=\"card d-flex flex-column h-100\">\n            <div class=\"card-tag-top\">".concat(item.area, "</div>\n            <img src=\"").concat(item.imgUrl, "\" alt=\"product img\" class=\"card-img-top\">\n            <div class=\"card-body d-flex flex-column justify-content-between position-relative h-100\">\n              <div className=\"h-100\">\n                <div class=\"card-tag-middle\">").concat(item.rate, "</div>\n                <h3 class=\"text-primary h4 border-0 border-bottom border-primary lh-base | mb-6\">").concat(item.name, "</h3>\n                <p class=\"mb-4\">").concat(item.description, "</p>\n              </div>\n              <div class=\"d-flex justify-content-between align-items-center flex-wrap gap-1\">\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.group !== 0 ? 'd-block' : 'd-none', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      \u5269\u4E0B\u6700\u5F8C <span>").concat(item.group, "</span> \u7D44\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.group !== 0 ? 'd-none' : 'd-block', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      ").concat(item.limit, "\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp\">\n                      TWD <span class=\"h2 mb-0 ms-1 align-middle\">$").concat(item.price, "</span>\n                  </p>\n              </div>\n          </div>\n          </div>\n      </li>\n    ");
     str += content;
   });
   list.innerHTML = str;
@@ -112,7 +129,7 @@ function renderSelect(inputData) {
   //渲染地區資料
   var str = '';
   var selectGroup = inputData.map(function (item) {
-    return item.location;
+    return item.area;
   });
   var newSelectGroup = selectGroup.filter(function (item, index) {
     return selectGroup.indexOf(item) === index;
@@ -124,6 +141,7 @@ function renderSelect(inputData) {
   });
   selectLocation.innerHTML = selectStr + str;
   formLocation.innerHTML = "<option selected disabled value=\"\">\u8ACB\u9078\u64C7\u666F\u9EDE\u5730\u5340</option>" + str;
+  total.textContent = inputData.length;
 } // 顯示地區資料篩選
 
 
@@ -135,7 +153,7 @@ function switchLocation(e) {
     filterData = data;
   } else {
     filterData = data.filter(function (item) {
-      return e.target.value === item.location;
+      return e.target.value === item.area;
     });
   }
 
@@ -220,14 +238,13 @@ function checkValidation() {
 
 
 function init() {
+  getApi();
   selectLocation.addEventListener("change", switchLocation);
   formInput.forEach(function (item) {
     return item.addEventListener('keyup', checkValidation);
   });
   submitBtn.addEventListener("click", checkValidation);
   submitBtn.addEventListener("click", addProduct);
-  renderData(data);
-  renderSelect(data);
 }
 
 init();
