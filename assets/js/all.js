@@ -123,22 +123,23 @@ function renderSelect(inputData) {
     str += content;
   });
   selectLocation.innerHTML = selectStr + str;
-  formLocation.innerHTML = "<option selected disabled>\u8ACB\u9078\u64C7\u666F\u9EDE\u5730\u5340</option>" + str;
+  formLocation.innerHTML = "<option selected disabled value=\"\">\u8ACB\u9078\u64C7\u666F\u9EDE\u5730\u5340</option>" + str;
 } // 顯示地區資料篩選
 
 
 function switchLocation(e) {
   //console.log(e.target.value);
   var filterData = [];
-  data.filter(function (item) {
-    if (e.target.value === '全部區域') {
-      filterData = data;
-    } else if (e.target.value === item.location) {
-      filterData.push(item);
-    }
 
-    ;
-  });
+  if (e.target.value === '全部地區') {
+    filterData = data;
+  } else {
+    filterData = data.filter(function (item) {
+      return e.target.value === item.location;
+    });
+  }
+
+  ;
   selectLocation.value = e.target.value;
   var totalNum = filterData.length;
   total.textContent = totalNum;
@@ -174,6 +175,7 @@ function addProduct(e) {
     formInput[index].classList.remove('is-valid');
   });
   formLocation.value = "請選擇景點地區";
+  submitBtn.classList.add('disabled');
   renderData(data);
 } //加入千分位符號
 
@@ -222,9 +224,10 @@ function init() {
   formInput.forEach(function (item) {
     return item.addEventListener('keyup', checkValidation);
   });
+  submitBtn.addEventListener("click", checkValidation);
   submitBtn.addEventListener("click", addProduct);
-  renderSelect(data);
   renderData(data);
+  renderSelect(data);
 }
 
 init();
