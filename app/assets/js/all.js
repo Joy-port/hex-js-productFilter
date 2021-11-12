@@ -111,12 +111,16 @@ let data =[
 let url ='https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json';
 // Make a request for a user with a given ID
 function getApi(){
+  selectLocation.addEventListener("change", switchLocation);
+  formInput.forEach(item => item.addEventListener('keyup', checkValidation));
+  submitBtn.addEventListener("click", checkValidation);
+  submitBtn.addEventListener("click", addProduct);
 
   axios.get(url)
     .then(function (res) {
       // handle success
       data = res.data.data;
-      console.log(data);
+      //console.log(data);
       renderData(data);
       renderSelect(data);
     })
@@ -124,6 +128,7 @@ function getApi(){
       // handle error
       console.log(error);
   });
+
 }
 
 
@@ -156,7 +161,7 @@ function renderData(inputData){
                       ${item.limit}
                   </p>
                   <p class="text-primary align-middle text-nowarp">
-                      TWD <span class="h2 mb-0 ms-1 align-middle">$${item.price}</span>
+                      TWD <span class="h2 mb-0 ms-1 align-middle">$${format(item.price)}</span>
                   </p>
               </div>
           </div>
@@ -217,12 +222,12 @@ function addProduct(e){
   let valueAry = formInput.map(item => item.value);
 
   let product ={
-    title: valueAry[0],
+    name: valueAry[0],
     imgUrl: valueAry[1],
-    location: valueAry[2],
+    area: valueAry[2],
     price: format(valueAry[3]),
-    inStock: valueAry[4],
-    rating: valueAry[5],
+    group: valueAry[4],
+    rate: valueAry[5],
     description: valueAry[6],
     id: new Date().getTime()
   };
@@ -271,17 +276,5 @@ function checkValidation(){
 }
 
 
-//預設渲染
-function init(){  
-  getApi();
-  selectLocation.addEventListener("change", switchLocation);
-  formInput.forEach(item => item.addEventListener('keyup', checkValidation));
-  submitBtn.addEventListener("click", checkValidation);
-  submitBtn.addEventListener("click", addProduct);
-
-  
-
-
-}
-
-init();
+//取得資料
+getApi();
