@@ -15,7 +15,8 @@ const total = document.querySelector('.js-totalNum');
 const form = document.querySelector('.search-lists');
 const submitBtn = document.querySelector('.js-btn');
 const formLocation = document.querySelector('.js-location');
-const  formInput = Array.from(form.querySelectorAll('.input-primary'));
+const formInput = Array.from(form.querySelectorAll('.input-primary'));
+
 
 let data =[
   {
@@ -72,7 +73,7 @@ let data =[
     inStock: 3,
     price: 2480,
     imgUrl: './assets/images/6.png'
-},
+}
   // {
   //   "id": 0,
   //   "name": "肥宅心碎賞櫻3日",
@@ -161,23 +162,24 @@ function renderSelect(inputData){
     str += content;
   })
   selectLocation.innerHTML = selectStr + str;
-  formLocation.innerHTML = `<option selected disabled>請選擇景點地區</option>` + str;
+  formLocation.innerHTML = `<option selected disabled value="">請選擇景點地區</option>` + str;
 }
 
 
 // 顯示地區資料篩選
 function switchLocation(e){
   //console.log(e.target.value);
+  let filterData =[];
 
-  let filterData = [];
-  data.filter(item =>{
-    if(e.target.value === '全部區域'){
-      filterData = data;
-    }else if(e.target.value === item.location){
-      filterData.push(item);
-    };
-  });
-  selectLocation.value=e.target.value;
+  if(e.target.value ==='全部地區'){
+    filterData = data ;
+  }else{
+    filterData = data.filter(function(item){
+      return e.target.value === item.location;
+    });
+  };
+  
+  selectLocation.value = e.target.value;
   
   let totalNum = filterData.length;
   total.textContent = totalNum;
@@ -211,6 +213,7 @@ function addProduct(e){
     formInput[index].classList.remove('is-valid');
   });
   formLocation.value="請選擇景點地區";
+  submitBtn.classList.add('disabled');
 
   renderData(data);
 }
@@ -244,18 +247,18 @@ function checkValidation(){
   }else{
     formInput[5].classList.add('is-invalid');
   };
-
-
 }
+
+
 //預設渲染
-function init(){
+function init(){  
   selectLocation.addEventListener("change", switchLocation);
   formInput.forEach(item => item.addEventListener('keyup', checkValidation));
+  submitBtn.addEventListener("click", checkValidation);
   submitBtn.addEventListener("click", addProduct);
-  
-  renderSelect(data);
-  renderData(data);
 
+  renderData(data);
+  renderSelect(data);
 }
 
 init();
