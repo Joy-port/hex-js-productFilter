@@ -9,6 +9,7 @@
 // 描述欄位使用 textarea
 // 星級區間是 1-10 分
 // 金額、組數、星級的 type 為 Number
+
 const list = document.querySelector('.list');
 const selectLocation = document.querySelector('.category-group');
 const total = document.querySelector('.js-totalNum');
@@ -17,7 +18,7 @@ const submitBtn = document.querySelector('.js-btn');
 const formLocation = document.querySelector('.js-location');
 const formInput = Array.from(form.querySelectorAll('.input-primary'));
 
-
+//week 5 data
 let data =[
   {
     location: '台北',
@@ -106,6 +107,25 @@ let data =[
   // }
 ];
 
+//week 6 data
+let url ='https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json';
+// Make a request for a user with a given ID
+function getApi(){
+
+  axios.get(url)
+    .then(function (res) {
+      // handle success
+      data = res.data.data;
+      console.log(data);
+      renderData(data);
+      renderSelect(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+  });
+}
+
 
 //資料渲染
 function renderData(inputData){
@@ -114,22 +134,22 @@ function renderData(inputData){
   inputData.forEach(item => {
     let content =`<li class="col-md-6 col-lg-4 mb-4">
         <div class="card d-flex flex-column h-100">
-            <div class="card-tag-top">${item.location}</div>
+            <div class="card-tag-top">${item.area}</div>
             <img src="${item.imgUrl}" alt="product img" class="card-img-top">
             <div class="card-body d-flex flex-column justify-content-between position-relative h-100">
               <div className="h-100">
-                <div class="card-tag-middle">${item.rating}</div>
-                <h3 class="text-primary h4 border-0 border-bottom border-primary lh-base | mb-6">${item.title}</h3>
+                <div class="card-tag-middle">${item.rate}</div>
+                <h3 class="text-primary h4 border-0 border-bottom border-primary lh-base | mb-6">${item.name}</h3>
                 <p class="mb-4">${item.description}</p>
               </div>
               <div class="d-flex justify-content-between align-items-center flex-wrap gap-1">
-                  <p class="text-primary align-middle text-nowarp ${item.inStock!== 0 ? 'd-block': 'd-none'}">
+                  <p class="text-primary align-middle text-nowarp ${item.group!== 0 ? 'd-block': 'd-none'}">
                       <span class="material-icons-outlined me-1 align-middle card-icon">
                       error
                       </span>
-                      剩下最後 <span>${item.inStock}</span> 組
+                      剩下最後 <span>${item.group}</span> 組
                   </p>
-                  <p class="text-primary align-middle text-nowarp ${item.inStock!== 0 ? 'd-none': 'd-block'}">
+                  <p class="text-primary align-middle text-nowarp ${item.group!== 0 ? 'd-none': 'd-block'}">
                       <span class="material-icons-outlined me-1 align-middle card-icon">
                       error
                       </span>
@@ -151,7 +171,7 @@ function renderData(inputData){
 function renderSelect(inputData){
   //渲染地區資料
   let str = '';
-  let selectGroup = inputData.map(item => item.location);
+  let selectGroup = inputData.map(item => item.area);
   let newSelectGroup = selectGroup.filter((item,index)=> selectGroup.indexOf(item)=== index);
   let selectStr= '<option value="全部地區" selected>全部地區</option>';
 
@@ -163,6 +183,7 @@ function renderSelect(inputData){
   })
   selectLocation.innerHTML = selectStr + str;
   formLocation.innerHTML = `<option selected disabled value="">請選擇景點地區</option>` + str;
+  total.textContent = inputData.length;
 }
 
 
@@ -175,7 +196,7 @@ function switchLocation(e){
     filterData = data ;
   }else{
     filterData = data.filter(function(item){
-      return e.target.value === item.location;
+      return e.target.value === item.area;
     });
   };
   
@@ -252,13 +273,15 @@ function checkValidation(){
 
 //預設渲染
 function init(){  
+  getApi();
   selectLocation.addEventListener("change", switchLocation);
   formInput.forEach(item => item.addEventListener('keyup', checkValidation));
   submitBtn.addEventListener("click", checkValidation);
   submitBtn.addEventListener("click", addProduct);
 
-  renderData(data);
-  renderSelect(data);
+  
+
+
 }
 
 init();
