@@ -102,10 +102,16 @@ var data = [{
 var url = 'https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json'; // Make a request for a user with a given ID
 
 function getApi() {
+  selectLocation.addEventListener("change", switchLocation);
+  formInput.forEach(function (item) {
+    return item.addEventListener('keyup', checkValidation);
+  });
+  submitBtn.addEventListener("click", checkValidation);
+  submitBtn.addEventListener("click", addProduct);
   axios.get(url).then(function (res) {
     // handle success
-    data = res.data.data;
-    console.log(data);
+    data = res.data.data; //console.log(data);
+
     renderData(data);
     renderSelect(data);
   })["catch"](function (error) {
@@ -119,7 +125,7 @@ function renderData(inputData) {
   //渲染當前票券資訊
   var str = '';
   inputData.forEach(function (item) {
-    var content = "<li class=\"col-md-6 col-lg-4 mb-4\">\n        <div class=\"card d-flex flex-column h-100\">\n            <div class=\"card-tag-top\">".concat(item.area, "</div>\n            <img src=\"").concat(item.imgUrl, "\" alt=\"product img\" class=\"card-img-top\">\n            <div class=\"card-body d-flex flex-column justify-content-between position-relative h-100\">\n              <div className=\"h-100\">\n                <div class=\"card-tag-middle\">").concat(item.rate, "</div>\n                <h3 class=\"text-primary h4 border-0 border-bottom border-primary lh-base | mb-6\">").concat(item.name, "</h3>\n                <p class=\"mb-4\">").concat(item.description, "</p>\n              </div>\n              <div class=\"d-flex justify-content-between align-items-center flex-wrap gap-1\">\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.group !== 0 ? 'd-block' : 'd-none', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      \u5269\u4E0B\u6700\u5F8C <span>").concat(item.group, "</span> \u7D44\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.group !== 0 ? 'd-none' : 'd-block', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      ").concat(item.limit, "\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp\">\n                      TWD <span class=\"h2 mb-0 ms-1 align-middle\">$").concat(item.price, "</span>\n                  </p>\n              </div>\n          </div>\n          </div>\n      </li>\n    ");
+    var content = "<li class=\"col-md-6 col-lg-4 mb-4\">\n        <div class=\"card d-flex flex-column h-100\">\n            <div class=\"card-tag-top\">".concat(item.area, "</div>\n            <img src=\"").concat(item.imgUrl, "\" alt=\"product img\" class=\"card-img-top\">\n            <div class=\"card-body d-flex flex-column justify-content-between position-relative h-100\">\n              <div className=\"h-100\">\n                <div class=\"card-tag-middle\">").concat(item.rate, "</div>\n                <h3 class=\"text-primary h4 border-0 border-bottom border-primary lh-base | mb-6\">").concat(item.name, "</h3>\n                <p class=\"mb-4\">").concat(item.description, "</p>\n              </div>\n              <div class=\"d-flex justify-content-between align-items-center flex-wrap gap-1\">\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.group !== 0 ? 'd-block' : 'd-none', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      \u5269\u4E0B\u6700\u5F8C <span>").concat(item.group, "</span> \u7D44\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp ").concat(item.group !== 0 ? 'd-none' : 'd-block', "\">\n                      <span class=\"material-icons-outlined me-1 align-middle card-icon\">\n                      error\n                      </span>\n                      ").concat(item.limit, "\n                  </p>\n                  <p class=\"text-primary align-middle text-nowarp\">\n                      TWD <span class=\"h2 mb-0 ms-1 align-middle\">$").concat(format(item.price), "</span>\n                  </p>\n              </div>\n          </div>\n          </div>\n      </li>\n    ");
     str += content;
   });
   list.innerHTML = str;
@@ -178,12 +184,12 @@ function addProduct(e) {
     return item.value;
   });
   var product = {
-    title: valueAry[0],
+    name: valueAry[0],
     imgUrl: valueAry[1],
-    location: valueAry[2],
+    area: valueAry[2],
     price: format(valueAry[3]),
-    inStock: valueAry[4],
-    rating: valueAry[5],
+    group: valueAry[4],
+    rate: valueAry[5],
     description: valueAry[6],
     id: new Date().getTime()
   };
@@ -234,18 +240,8 @@ function checkValidation() {
   }
 
   ;
-} //預設渲染
+} //取得資料
 
 
-function init() {
-  getApi();
-  selectLocation.addEventListener("change", switchLocation);
-  formInput.forEach(function (item) {
-    return item.addEventListener('keyup', checkValidation);
-  });
-  submitBtn.addEventListener("click", checkValidation);
-  submitBtn.addEventListener("click", addProduct);
-}
-
-init();
+getApi();
 //# sourceMappingURL=all.js.map
