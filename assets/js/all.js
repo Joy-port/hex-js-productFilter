@@ -275,22 +275,23 @@ function chartDisplay(data) {
     },
     donut: {
       title: "套票地區比重",
-      // label: { //將圓餅的比例改成數字
-      //   format: function (value) { return value; },
-      // },
+      label: {
+        //將圓餅的比例改成數字 value
+        format: function format(value) {
+          return none;
+        }
+      },
       stack: {
         normalize: true
-      }
+      },
+      width: 10
     },
     color: {
       pattern: ["#26C0C7", "#5151D3", "#E68618"]
     },
-    tooltip: {
-      format: {
-        value: function value(_value) {
-          return "".concat(_value, " \u7A2E");
-        }
-      }
+    tooltip: {// format:{ //將圓餅的hover比例改成數字
+      //   value: function (value) { return `${value} 種` ;}
+      // }
     }
   });
 } //取得資料
