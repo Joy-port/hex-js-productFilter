@@ -123,6 +123,7 @@ function getApi(){
       //console.log(data);
       renderData(data);
       renderSelect(data);
+      chartDisplay(data);
     })
     .catch(function (error) {
       // handle error
@@ -242,6 +243,7 @@ function addProduct(e){
   submitBtn.classList.add('disabled');
 
   renderData(data);
+  chartDisplay(data);
 }
 //加入千分位符號
 function format(value){
@@ -276,5 +278,55 @@ function checkValidation(){
 }
 
 
+function chartDisplay(data){
+
+  let totalObj = {};
+  data.forEach(item =>{
+    if(totalObj[item.area] === undefined){
+      totalObj[item.area] = 1 ;  //陣列中屬性為
+    }else{
+      totalObj[item.area] ++ ;
+    }
+  });
+  // console.log(totalObj); // {高雄：1, 台中:1...} 
+
+  let newData = [];
+  let area = Object.keys(totalObj); //得到物件中的屬性名稱，組成陣列
+  // console.log(area);
+  area.forEach((item)=>{
+    let ary = [];
+    ary.push(item); //加入area 的陣列內容-> 屬性名稱 [高雄,台中,台北]
+    ary.push(totalObj[item]); //totalObj.高雄= 抓出物件中的屬性內容 [高雄,1]/ [台中,1]
+    newData.push(ary); //將[屬性名稱,屬性內容] 的array 加入newData
+  })
+  // console.log(newData); //[[高雄,1], [台中,1],[台北,1]]
+
+
+  const chart = c3.generate({
+    bindto: "#chart",
+    data: {
+      columns: newData,
+      type : 'donut',
+    },
+    donut: {
+      title: "套票地區比重",
+      // label: { //將圓餅的比例改成數字
+      //   format: function (value) { return value; },
+      // },
+      stack: {
+        normalize: true
+      }
+    },
+    color: {
+      pattern: ["#26C0C7", "#5151D3","#E68618"]
+  } ,
+  tooltip: {
+      format:{
+        value: function (value) { return `${value} 種` ;}
+      }
+    }
+});
+  
+}
 //取得資料
 getApi();
