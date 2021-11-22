@@ -1,3 +1,16 @@
- .c3-chart-arc .c3-target .c3-target-高雄{
-    fill: #26C0C7;
+.c3-chart-arcs-title
+{   
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px; 
+    color: #4B4B4B80;
+}
+
+.c3-chart-arc path {
+    stroke: $light;
+    stroke-width: 2px;
+}
+
+#chart{
+    width: 160px;
+    max-height: 160px;
 }
